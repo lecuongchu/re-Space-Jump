@@ -1,0 +1,20 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Nike Precision 6 ‘Black Volt’",
+      "code": "DD9535-009",
+      "price": 2450000,
+      "rating": 0,
+      "image": "https://static.nike.com/a/images/...jpg"
+    },
+    {
+      "id": 2,
+      "name": "JA 2 EP 'Guava Ice'",
+      "code": "FD7327-100",
+      "price": 3750000,
+      "rating": 5,
+      "image": "https://static.nike.com/a/images/...jpg"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SpaceJump</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .hoverable:hover .hoverable-menu {
+            display: block;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header class="bg-white">
+        <div class="bg-white text-black text-sm px-4 py-3 flex justify-between items-center border-b relative">
+            <div class="font-medium">📞 HỖ TRỢ MIỄN PHÍ: 0586558886</div>
+            <div class="space-x-6 text-sm font-medium flex items-center relative">
+                <div class="relative">
+                    <button id="logoutBtn" class="flex items-center hover:text-blue-600 focus:outline-none">
+                        <span class="mr-1">🔒</span>
+                        <span>ĐĂNG XUẤT</span>
+                    </button>
+                </div>
+                <a href="#" class="hover:underline">GIỚI THIỆU</a>
+                <a href="#" class="hover:underline">LIÊN HỆ</a>
+            </div>
+        </div>
+
+        <nav class="flex items-center justify-between px-6 py-5 border-b bg-white">
+            <div class="flex items-center space-x-10">
+                <img src="https://bizweb.dktcdn.net/100/427/393/themes/820878/assets/logo.png?1740124099491" alt="Logo"
+                    class="h-16" />
+                <div class="space-x-6 text-base font-medium">
+                    <a href="#" class="hover:underline">TRANG CHỦ</a>
+                    <a href="#" class="hover:underline">SẢN PHẨM</a>
+                    <a href="#" class="hover:underline">TIN TỨC</a>
+                    <a href="#" class="text-red-600 hover:underline">SALE OUTLET</a>
+                    <a href="#" class="hover:underline">LIÊN HỆ</a>
+                    <a href="#" class="hover:underline">SPACEJUMP MADE</a>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-5">
+                <button
+                    class="bg-[#0d1b2a] text-white px-5 py-2.5 rounded-full text-base font-semibold hover:bg-[#1e293b] transition">
+                    ĐẶT HÀNG
+                </button>
+                <button class="text-xl">🔍</button>
+                <div class="flex items-center space-x-1 text-base">
+                    🛒<span>0 / 0đ</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <img src="https://bizweb.dktcdn.net/100/427/393/themes/820878/assets/slider_1.jpg?1740124099491" alt="">
+    <main class="p-8">
+        <h2 class="text-2xl font-bold mb-6 text-center">SẢN PHẨM</h2>
+        <div id="product-list" class="grid grid-cols-4 gap-8">
+        </div>
+    </main>
+    <script type="module" src="../js/main.js"></script>
+</body>
+
+</html>
