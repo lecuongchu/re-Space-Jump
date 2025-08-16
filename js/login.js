@@ -18,7 +18,15 @@ if (loginBtn) {
 
         if (!validateEmail(email)) return alert("Email không hợp lệ");
         if (!validatePassword(password)) return alert("Mật khẩu phải >= 6 ký tự");
-        await signIn(email, password);
+
+        try {
+            await signIn(email, password);
+            alert("Đăng nhập thành công!");
+            window.location.href = "index.html";
+        } catch (err) {
+            alert("Đăng nhập thất bại: " + err.message);
+            console.error("❌ Lỗi login:", err);
+        }
     });
 }
 
@@ -35,4 +43,3 @@ if (googleBtn) {
         }
     });
 }
-
