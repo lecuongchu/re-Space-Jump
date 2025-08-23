@@ -63,3 +63,10 @@ function renderStars(rating = 0) {
 
 loadProducts();
 
+const cartBtn = document.getElementById("cartBtn");
+if (cartBtn) {
+  cartBtn.addEventListener("click", () => {
+    window.location.href = "./html/cart.html";
+  });
+}
+

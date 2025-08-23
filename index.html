@@ -14,7 +14,7 @@
 
 </head>
 
-<body>
+<body class="min-h-screen flex flex-col">
     <header class="bg-white">
         <div class="bg-white text-black text-sm px-4 py-3 flex justify-between items-center border-b relative">
             <div class="font-medium">📞 HỖ TRỢ MIỄN PHÍ: 0586558886</div>
@@ -50,62 +50,53 @@
                     ĐẶT HÀNG
                 </button>
                 <button class="text-xl">🔍</button>
-                <div class="flex items-center space-x-1 text-base">
-                    🛒<span>0 / 0đ</span>
-                </div>
+                <button id="cartBtn" class="flex items-center space-x-1 text-base hover:text-blue-600">
+                    🛒 <span>Giỏ hàng</span>
+                </button>
             </div>
+
         </nav>
     </header>
     <img src="https://bizweb.dktcdn.net/100/427/393/themes/820878/assets/slider_1.jpg?1740124099491" alt="">
-    <main class="p-8">
+    <main class="p-8 flex-grow">
         <h2 class="text-2xl font-bold mb-6 text-center">SẢN PHẨM</h2>
         <div id="product-list" class="grid grid-cols-4 gap-8">
         </div>
     </main>
     <footer class="bg-[#2d5c6d] text-white">
-        <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-                <img src="https://bizweb.dktcdn.net/100/427/393/themes/820878/assets/logo_white.png?1740124099491" alt="Logo" class="w-24 mb-4">
-                <p class="text-gray-300 hover:text-white text-sm leading-6">
-                    Space Jump chuyên cung cấp sản phẩm giày chính hãng, giày hàng hiệu,
-                    giày cao cấp, giày thể thao... Sản phẩm chính hãng, đa dạng, giá tốt
-                </p>
-            </div>
-
-            <div>
-                <h3 class="font-semibold mb-3">Thông tin</h3>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="text-gray-300 hover:text-white hover:underline">Trang chủ</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white hover:underline">Giới thiệu</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white hover:underline">Sản phẩm</a></li>
-                </ul>
-            </div>
-            
-            <div>
-                <h3 class="font-semibold mb-3">Hướng dẫn</h3>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="text-gray-300 hover:text-white hover:underline">Hướng dẫn mua hàng</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white hover:underline">Hướng dẫn thanh toán</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white hover:underline">Hướng dẫn giao nhận</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white hover:underline">Điều khoản dịch vụ</a></li>
-                </ul>
-            </div>
-
-            <!-- Cột 4: Liên hệ -->
-            <div>
-                <h3 class="font-semibold mb-3">Liên hệ</h3>
-                <p class="text-gray-300 hover:text-white text-sm">Số 7 Nguyễn Hy Quang, phường Ô Chợ Dừa, quận Đống Đa, Hà Nội</p>
-                <p class="text-gray-300 hover:text-white text-sm mt-2">📧 spacejump.official@gmail.com</p>
-                <p class="text-gray-300 hover:text-white text-sm">📞 0586558886</p>
-                <div class="flex gap-3 mt-3">
-                    <a href="#"><i class="fab fa-twitter text-xl"></i></a>
-                    <a href="#"><i class="fab fa-facebook text-xl"></i></a>
-                    <a href="#"><i class="fab fa-instagram text-xl"></i></a>
-                    <a href="#"><i class="fab fa-youtube text-xl"></i></a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div>
+        <img src="https://bizweb.dktcdn.net/100/427/393/themes/820878/assets/logo_white.png?1740124099491"
+             alt="Logo" class="w-24 mb-4">
+        <p class="text-gray-300 text-sm leading-6">
+          Space Jump chuyên cung cấp sản phẩm giày chính hãng, giày hàng hiệu, giày cao cấp, giày thể thao...
+        </p>
+      </div>
+      <div>
+        <h3 class="font-semibold mb-3">Thông tin</h3>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#" class="text-gray-300 hover:text-white hover:underline">Trang chủ</a></li>
+          <li><a href="#" class="text-gray-300 hover:text-white hover:underline">Giới thiệu</a></li>
+          <li><a href="#" class="text-gray-300 hover:text-white hover:underline">Sản phẩm</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-semibold mb-3">Hướng dẫn</h3>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#" class="text-gray-300 hover:text-white hover:underline">Hướng dẫn mua hàng</a></li>
+          <li><a href="#" class="text-gray-300 hover:text-white hover:underline">Hướng dẫn thanh toán</a></li>
+          <li><a href="#" class="text-gray-300 hover:text-white hover:underline">Hướng dẫn giao nhận</a></li>
+          <li><a href="#" class="text-gray-300 hover:text-white hover:underline">Điều khoản dịch vụ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-semibold mb-3">Liên hệ</h3>
+        <p class="text-gray-300 text-sm">Số 7 Nguyễn Hy Quang, Ô Chợ Dừa, Đống Đa, Hà Nội</p>
+        <p class="text-gray-300 text-sm mt-2">📧 spacejump.official@gmail.com</p>
+        <p class="text-gray-300 text-sm">📞 0586558886</p>
+      </div>
+    </div>
+  </footer>
     <script type="module" src="./js/main.js"></script>
 </body>
 
