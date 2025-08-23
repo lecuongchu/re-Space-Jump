@@ -25,16 +25,17 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 async function loadProducts() {
-    try {
-        const querySnapshot = await getDocs(collection(db, "products"));
-        const products = querySnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        }));
+  try {
+    const querySnapshot = await getDocs(collection(db, "products"));
+    const products = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
 
-        const productList = document.getElementById("product-list");
-        productList.innerHTML = products.map(product => `
-      <div class="border rounded-lg p-4 shadow hover:shadow-lg transition text-center">
+    const productList = document.getElementById("product-list");
+    productList.innerHTML = products.map(product => `
+      <div class="border rounded-lg p-4 shadow hover:shadow-lg transition text-center cursor-pointer"
+           onclick="window.location.href='html/product.html?id=${product.id}'">
         <img src="${product.image}" alt="${product.name}" class="mx-auto mb-4 h-48 object-contain">
         <h3 class="font-semibold text-lg">${product.name}</h3>
         <p class="text-sm text-gray-600">${product.code}</p>
@@ -46,10 +47,11 @@ async function loadProducts() {
         </p>
       </div>
     `).join("");
-    } catch (err) {
-        console.error("❌ Lỗi khi tải sản phẩm:", err);
-    }
+  } catch (err) {
+    console.error("❌ Lỗi khi tải sản phẩm:", err);
+  }
 }
+
 
 function renderStars(rating = 0) {
     let stars = "";
@@ -60,3 +62,4 @@ function renderStars(rating = 0) {
 }
 
 loadProducts();
+
