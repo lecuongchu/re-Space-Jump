@@ -71,14 +71,27 @@ if (cartBtn) {
   });
 }
 
-import { userSession } from "./userSession.js";
-
 const adminBtn = document.getElementById("adminBtn");
-
-const session = userSession.getSession();
-if (session && session.additionalInfo && session.additionalInfo.role_id === 1) {
-  adminBtn.classList.remove("hidden");
+if (adminBtn) {
   adminBtn.addEventListener("click", () => {
     window.location.href = "./html/admin.html";
   });
 }
+
+import { userSession } from "./userSession.js";
+
+document.addEventListener("DOMContentLoaded", () => {
+  const adminBtn = document.getElementById("adminBtn");
+  const session = userSession.getSession();
+
+  console.log("DEBUG session:", session);
+
+  if (session && Number(session.role_id) === 1) {
+    adminBtn.classList.remove("hidden");
+    adminBtn.addEventListener("click", () => {
+      window.location.href = "./html/admin.html";
+    });
+  }
+});
+
+

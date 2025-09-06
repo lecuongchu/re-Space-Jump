@@ -10,19 +10,13 @@ import {
 import { uploadimg } from "./uploadimg.js";
 import { userSession } from "./userSession.js";
 
-// ==== 1. KIỂM TRA QUYỀN ADMIN ==== //
-const session = userSession.getSession();
-if (!session || !session.additionalInfo || session.additionalInfo.role_id !== 1) {
-  alert("⛔ Bạn không có quyền truy cập trang Admin!");
-  window.location.href = "../index.html";
-}
 
-// ==== 2. DOM ==== //
+// ==== 1. DOM ==== //
 const form = document.getElementById("productForm");
 const statusEl = document.getElementById("status");
 const productList = document.getElementById("productList");
 
-// ==== 3. Render sản phẩm từ Firestore ==== //
+// ==== 2. Render sản phẩm từ Firestore ==== //
 async function renderProducts() {
   productList.innerHTML = "⏳ Đang tải sản phẩm...";
   try {
@@ -64,7 +58,7 @@ async function renderProducts() {
   }
 }
 
-// ==== 4. Submit form thêm sản phẩm ==== //
+// ==== 3. Submit form thêm sản phẩm ==== //
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   try {
@@ -97,5 +91,7 @@ form.addEventListener("submit", async (e) => {
   }
 });
 
-// ==== 5. Load sản phẩm khi mở trang ==== //
 renderProducts();
+
+
+
