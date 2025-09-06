@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Ảnh Cloudinary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1e1e1e;
+            color: white;
+            padding: 20px;
+        }
+
+        .upload-btn {
+            padding: 8px 16px;
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .upload-btn:disabled {
+            background: #888;
+        }
+
+        #upload-area {
+            margin-bottom: 20px;
+        }
+
+        .status-success {
+            background: #222;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .status-error {
+            color: red;
+        }
+
+        .status-loading {
+            color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Upload ảnh lên Cloudinary</h2>
+
+    <!-- Upload file -->
+    <div id="upload-area">
+        <input type="file" id="file-input">
+        <button id="upload-btn" class="upload-btn">☁️ Upload file</button>
+    </div>
+
+    <!-- Upload từ URL -->
+    <div>
+        <input type="text" id="url-input" placeholder="Nhập link ảnh..." style="width:300px;">
+        <button id="url-upload-btn" class="upload-btn">🌐 Upload từ URL</button>
+    </div>
+
+    <img id="image-preview" style="display:none; max-width:200px; margin-top:10px;">
+    <div id="upload-status"></div>
+
+    <!-- Kết nối file JS -->
+    <script src="../js/uploadimg.js"></script>
+</body>
+
+</html>

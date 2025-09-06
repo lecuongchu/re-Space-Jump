@@ -5,7 +5,7 @@ const logoutBtn = document.getElementById('logoutBtn');
 logoutBtn.addEventListener('click', (e) => {
     signOutUser().then(() => {
         alert("Đăng xuất thành công!");
-        window.location.href = "login.html";
+        window.location.href = "html/login.html";
     })
 });
 
@@ -25,6 +25,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 async function loadProducts() {
+  console.log("Loading products..."); 
   try {
     const querySnapshot = await getDocs(collection(db, "products"));
     const products = querySnapshot.docs.map(doc => ({
@@ -70,3 +71,14 @@ if (cartBtn) {
   });
 }
 
+import { userSession } from "./userSession.js";
+
+const adminBtn = document.getElementById("adminBtn");
+
+const session = userSession.getSession();
+if (session && session.additionalInfo && session.additionalInfo.role_id === 1) {
+  adminBtn.classList.remove("hidden");
+  adminBtn.addEventListener("click", () => {
+    window.location.href = "./html/admin.html";
+  });
+}

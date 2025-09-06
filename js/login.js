@@ -22,7 +22,7 @@ if (loginBtn) {
         try {
             await signIn(email, password);
             alert("Đăng nhập thành công!");
-            window.location.href = "index.html";
+            window.location.href = "SPCK/index.html";
         } catch (err) {
             alert("Đăng nhập thất bại: " + err.message);
             console.error("❌ Lỗi login:", err);
@@ -37,7 +37,7 @@ if (googleBtn) {
             const provider = new GoogleAuthProvider();
             const result = await signInWithPopup(auth, provider);
             alert(`Đăng nhập Google thành công: ${result.user.email}`);
-            window.location.href = "index.html";
+            window.location.href = "SPCK/index.html";
         } catch (err) {
             alert("Lỗi đăng nhập Google: " + err.message);
         }
