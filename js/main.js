@@ -105,9 +105,16 @@ if (adminBtn) {
   });
 }
 
-// Hiển thị nút admin nếu role_id = 1
 document.addEventListener("DOMContentLoaded", () => {
   const session = userSession.getSession();
+
+  // Hiển thị email nếu có
+  const emailEl = document.getElementById("userEmail");
+  if (session && session.email && emailEl) {
+    emailEl.textContent = session.email;
+  }
+
+  // Hiển thị nút admin nếu role_id = 1
   if (session && Number(session.role_id) === 1) {
     const adminBtnEl = document.getElementById("adminBtn");
     if (adminBtnEl) adminBtnEl.classList.remove("hidden");

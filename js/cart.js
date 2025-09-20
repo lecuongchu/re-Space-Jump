@@ -9,6 +9,7 @@ async function renderCart(cartItems) {
   cartListEl.innerHTML = "";
   let total = 0;
 
+  // Nếu giỏ trống
   if (!cartItems || cartItems.length === 0) {
     cartListEl.innerHTML = `
       <div class="text-center py-20">
@@ -23,6 +24,7 @@ async function renderCart(cartItems) {
     return;
   }
 
+  // Nếu có sản phẩm
   for (const item of cartItems) {
     const productRef = doc(db, "products", item.productId);
     const productSnap = await getDoc(productRef);
@@ -64,6 +66,7 @@ async function renderCart(cartItems) {
       </button>
     `;
 
+    // Xử lý nút xóa
     cartItemEl.querySelector(".delete-btn").addEventListener("click", async () => {
       await deleteDoc(doc(db, "carts", item.id));
       alert("🗑️ Đã xóa sản phẩm khỏi giỏ");
@@ -72,8 +75,28 @@ async function renderCart(cartItems) {
     cartListEl.appendChild(cartItemEl);
   }
 
-  cartSummaryEl.textContent = `Tổng cộng: ${total.toLocaleString()}₫`;
+  // === Tóm tắt & nút Thanh toán ===
+  cartSummaryEl.innerHTML = `
+    <div class="flex items-center justify-between mt-4">
+      <span class="text-lg font-bold text-red-600">
+        Tổng cộng: ${total.toLocaleString()}₫
+      </span>
+      <button id="checkoutBtn" 
+        class="px-6 py-3 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition">
+        ✅ Thanh toán
+      </button>
+    </div>
+  `;
+
+  // Bắt sự kiện click nút Thanh toán
+  const checkoutBtn = document.getElementById("checkoutBtn");
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener("click", () => {
+      window.location.href = "../html/checkout.html";
+    });
+  }
 }
+
 
 function loadCart() {
   const session = userSession.getSession();
