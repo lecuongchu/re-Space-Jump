@@ -8,7 +8,9 @@ import {
   getDocs,
   doc,
   getDoc,
-  deleteDoc
+  deleteDoc,
+  addDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -84,19 +86,45 @@ document.addEventListener("DOMContentLoaded", async () => {
     orderTotalEl.textContent = `Tổng cộng: ${total.toLocaleString()}₫`;
   }
 
-  // ==== Xử lý thanh toán & xoá giỏ hàng ====
+  // ==== Xử lý thanh toán & lưu lịch sử ====
   if (checkoutForm) {
     checkoutForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      // Xoá toàn bộ sản phẩm trong giỏ của user
+      const cartItems = await fetchCartItems();
+      if (!cartItems.length) {
+        alert("❌ Giỏ hàng trống!");
+        return;
+      }
+
+      const shippingInfo = {
+        fullName: document.getElementById("fullName").value,
+        address: document.getElementById("address").value,
+        phone: document.getElementById("phone").value
+      };
+
+      const total = cartItems.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      );
+
+      // Lưu đơn hàng
+      await addDoc(collection(db, "orders"), {
+        uid: session.uid,
+        items: cartItems,
+        total,
+        shippingInfo,
+        createdAt: serverTimestamp()
+      });
+
+      // Xoá giỏ hàng
       const q = query(collection(db, "carts"), where("uid", "==", session.uid));
       const snap = await getDocs(q);
       const deletes = snap.docs.map((d) => deleteDoc(doc(db, "carts", d.id)));
       await Promise.all(deletes);
 
       alert("✅ Đặt hàng thành công!");
-      window.location.href = "../index.html";
+      window.location.href = "../html/orders.html";
     });
   }
 

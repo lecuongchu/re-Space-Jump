@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch sử mua hàng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white shadow p-4 flex justify-between items-center">
+        <h1 class="text-xl font-bold flex items-center">📦 Lịch sử mua hàng</h1>
+        <a href="../index.html" class="text-blue-600 hover:underline">⬅ Tiếp tục mua sắm</a>
+    </header>
+
+    <!-- Main -->
+    <main class="flex justify-center items-center p-10">
+        <div id="ordersList" class="bg-white w-full max-w-3xl rounded-lg shadow p-8 text-center">
+            <!-- Nội dung lịch sử sẽ render bằng JS -->
+            <p class="text-gray-500">Đang tải đơn hàng...</p>
+        </div>
+    </main>
+
+    <script type="module" src="../js/orders.js"></script>
+</body>
+
+</html>
