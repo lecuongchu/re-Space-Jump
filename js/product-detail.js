@@ -1,11 +1,13 @@
+// Trang chi tiết sản phẩm
 import { db } from "./firebase/firebase-config.js";
 import { doc, onSnapshot, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
 import { userSession } from "./userSession.js";
 
+// Lấy ID sản phẩm từ URL
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("id");
-console.log("🔎 Product ID:", productId);
 
+// Hiển thị số sao đánh giá
 function renderStars(rating = 0) {
   const maxStars = 5;
   let stars = "";
@@ -15,6 +17,7 @@ function renderStars(rating = 0) {
   return stars;
 }
 
+// Render thông tin chi tiết sản phẩm
 function render(product) {
   document.getElementById("product-detail").innerHTML = `
     <div class="flex items-center justify-center">
@@ -23,13 +26,10 @@ function render(product) {
     </div>
     <div class="flex flex-col">
       <h2 class="text-4xl font-bold mb-4 text-gray-900 leading-snug">${product.name}</h2>
-      
-      <!-- Rating sao -->
       <p class="text-yellow-500 text-2xl mb-6">
         ${renderStars(product.rating || 0)} 
         <span class="text-gray-600 text-base ml-2">(${product.rating || 0}/5)</span>
       </p>
-
       <p class="text-gray-600 text-base mb-2">Mã SP: ${product.code || "N/A"}</p>
       <p class="text-red-600 text-3xl font-bold mb-6">
         ${Number(product.price || 0).toLocaleString()}₫
@@ -42,7 +42,7 @@ function render(product) {
       </div>
       <button id="add-to-cart"
         class="mt-8 bg-[#0d1b2a] text-white text-lg px-8 py-4 rounded-xl shadow hover:bg-[#1e293b] transition">
-        🛒 Thêm vào giỏ hàng
+        Thêm vào giỏ hàng
       </button>
     </div>
   `;
@@ -50,6 +50,7 @@ function render(product) {
   document.getElementById("add-to-cart").addEventListener("click", onAddToCart);
 }
 
+// Thêm sản phẩm vào giỏ hàng
 async function onAddToCart() {
   try {
     const session = userSession.getSession();
@@ -66,43 +67,45 @@ async function onAddToCart() {
       createdAt: new Date()
     });
 
-    alert("✅ Đã thêm vào giỏ hàng!");
+    alert("Đã thêm vào giỏ hàng!");
   } catch (err) {
-    console.error("❌ Lỗi thêm giỏ hàng:", err);
-    alert("❌ Thêm giỏ hàng thất bại");
+    console.error("Lỗi thêm giỏ hàng:", err);
+    alert("Thêm giỏ hàng thất bại");
   }
 }
 
+// Lấy dữ liệu sản phẩm realtime từ Firestore
 function loadProductRealtime() {
   if (!productId) {
     document.getElementById("product-detail").innerHTML =
-      "<p>❌ Không tìm thấy sản phẩm (id null)</p>";
+      "<p>Không tìm thấy sản phẩm (id null)</p>";
     return;
   }
 
   const productRef = doc(db, "products", productId);
 
+  // Theo dõi thay đổi realtime
   onSnapshot(
     productRef,
     (snap) => {
       if (!snap.exists()) {
         document.getElementById("product-detail").innerHTML =
-          "<p>❌ Sản phẩm không tồn tại</p>";
+          "<p>Sản phẩm không tồn tại</p>";
         return;
       }
 
       const product = snap.data();
-      console.log("🔄 Realtime update:", product);
       render(product);
     },
     (err) => {
-      console.error("❌ Lỗi realtime:", err);
+      console.error("Lỗi realtime:", err);
     }
   );
 }
 
 loadProductRealtime();
 
+// Nút mở giỏ hàng
 const cartBtn = document.getElementById("cartBtn");
 if (cartBtn) {
   cartBtn.addEventListener("click", () => {

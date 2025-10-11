@@ -1,24 +1,17 @@
+// Trang quản trị: thêm, xóa và hiển thị sản phẩm
 import { db } from "./firebase/firebase-config.js";
-import { 
-  collection, 
-  addDoc, 
-  getDocs, 
-  deleteDoc, 
-  doc, 
-  serverTimestamp 
-} from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
+import { collection, addDoc, getDocs, deleteDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
 import { uploadimg } from "./uploadimg.js";
 import { userSession } from "./userSession.js";
 
-
-// ==== 1. DOM ==== //
+// Các phần tử DOM
 const form = document.getElementById("productForm");
 const statusEl = document.getElementById("status");
 const productList = document.getElementById("productList");
 
-// ==== 2. Render sản phẩm từ Firestore ==== //
+// Hiển thị danh sách sản phẩm từ Firestore
 async function renderProducts() {
-  productList.innerHTML = "⏳ Đang tải sản phẩm...";
+  productList.innerHTML = "Đang tải sản phẩm...";
   try {
     const snap = await getDocs(collection(db, "products"));
     if (snap.empty) {
@@ -26,6 +19,7 @@ async function renderProducts() {
       return;
     }
 
+    // Render danh sách sản phẩm
     productList.innerHTML = snap.docs.map(docSnap => {
       const p = docSnap.data();
       return `
@@ -37,32 +31,32 @@ async function renderProducts() {
           <p class="mt-1">${"⭐".repeat(p.rating || 0)}</p>
           <button data-id="${docSnap.id}" 
             class="deleteBtn mt-3 bg-red-500 hover:bg-red-600 text-white py-1 rounded">
-            🗑 Xóa
+            Xóa
           </button>
         </div>
       `;
     }).join("");
 
-    // Gắn sự kiện cho nút Xóa
+    // Gắn sự kiện cho nút Xóa sản phẩm
     document.querySelectorAll(".deleteBtn").forEach(btn => {
       btn.addEventListener("click", async () => {
         if (confirm("Bạn có chắc muốn xóa sản phẩm này?")) {
           await deleteDoc(doc(db, "products", btn.dataset.id));
-          renderProducts(); // reload
+          renderProducts(); // tải lại danh sách
         }
       });
     });
   } catch (err) {
-    console.error("❌ Lỗi load sản phẩm:", err);
+    console.error("Lỗi load sản phẩm:", err);
     productList.innerHTML = "<p class='text-red-600'>Lỗi khi tải sản phẩm</p>";
   }
 }
 
-// ==== 3. Submit form thêm sản phẩm ==== //
+// Xử lý thêm sản phẩm mới
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   try {
-    statusEl.textContent = "⏳ Đang upload ảnh...";
+    statusEl.textContent = "Đang upload ảnh...";
     const name = document.getElementById("name").value.trim();
     const code = document.getElementById("code").value.trim();
     const price = Number(document.getElementById("price").value);
@@ -70,28 +64,28 @@ form.addEventListener("submit", async (e) => {
     const imageUrl = document.getElementById("imageUrl").value.trim();
 
     if (!name || !price || !imageUrl) {
-      statusEl.textContent = "⚠️ Vui lòng nhập đủ tên, giá và link ảnh.";
+      statusEl.textContent = "Vui lòng nhập đủ tên, giá và link ảnh.";
       return;
     }
 
+    // Upload ảnh lên Cloudinary
     const cloudinaryUrl = await uploadimg(imageUrl);
 
+    // Lưu sản phẩm vào Firestore
     await addDoc(collection(db, "products"), {
       name, code, price, rating,
       image: cloudinaryUrl,
       createdAt: serverTimestamp()
     });
 
-    statusEl.textContent = "✅ Thêm sản phẩm thành công!";
+    statusEl.textContent = "Thêm sản phẩm thành công!";
     form.reset();
     renderProducts();
   } catch (err) {
-    console.error("❌ Lỗi thêm sản phẩm:", err);
-    statusEl.textContent = "❌ " + err.message;
+    console.error("Lỗi thêm sản phẩm:", err);
+    statusEl.textContent = "Lỗi: " + err.message;
   }
 });
 
+// Gọi khi tải trang
 renderProducts();
-
-
-

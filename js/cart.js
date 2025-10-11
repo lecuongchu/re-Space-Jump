@@ -1,3 +1,4 @@
+// Quản lý hiển thị và thao tác giỏ hàng
 import { db } from "./firebase/firebase-config.js";
 import { collection, query, where, onSnapshot, doc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
 import { userSession } from "./userSession.js";
@@ -5,6 +6,7 @@ import { userSession } from "./userSession.js";
 const cartListEl = document.getElementById("cart-list");
 const cartSummaryEl = document.getElementById("cart-summary");
 
+// Hiển thị danh sách sản phẩm trong giỏ hàng
 async function renderCart(cartItems) {
   cartListEl.innerHTML = "";
   let total = 0;
@@ -13,10 +15,10 @@ async function renderCart(cartItems) {
   if (!cartItems || cartItems.length === 0) {
     cartListEl.innerHTML = `
       <div class="text-center py-20">
-        <p class="text-2xl font-semibold text-gray-600 mb-4">🛒 Giỏ hàng của bạn đang trống</p>
+        <p class="text-2xl font-semibold text-gray-600 mb-4">Giỏ hàng của bạn đang trống</p>
         <a href="../index.html" 
            class="inline-block mt-4 px-6 py-3 bg-[#0d1b2a] text-white rounded-lg shadow hover:bg-[#1e293b] transition">
-          ➕ Tiếp tục mua sắm
+          Tiếp tục mua sắm
         </a>
       </div>
     `;
@@ -53,7 +55,6 @@ async function renderCart(cartItems) {
         <p class="text-gray-600">Giá: <span class="font-semibold">${Number(product.price).toLocaleString()}₫</span></p>
         <p class="text-gray-600">Số lượng: <span class="font-semibold">${item.quantity}</span></p>
         <p class="text-red-600 font-bold text-lg mt-2">Tạm tính: ${itemTotal.toLocaleString()}₫</p>
-
         <p class="text-gray-700 mt-2">Mô tả: ${product.shortDescription || "Chưa có mô tả"}</p>
         <div class="mt-2 text-yellow-500 text-lg">
           ${fullStars}${halfStar}${emptyStars} 
@@ -62,20 +63,20 @@ async function renderCart(cartItems) {
       </div>
 
       <button class="delete-btn bg-red-500 text-white px-5 py-3 rounded-lg hover:bg-red-600 transition text-lg">
-        ❌ Xóa
+        Xóa
       </button>
     `;
 
-    // Xử lý nút xóa
+    // Xử lý nút Xóa sản phẩm khỏi giỏ
     cartItemEl.querySelector(".delete-btn").addEventListener("click", async () => {
       await deleteDoc(doc(db, "carts", item.id));
-      alert("🗑️ Đã xóa sản phẩm khỏi giỏ");
+      alert("Đã xóa sản phẩm khỏi giỏ");
     });
 
     cartListEl.appendChild(cartItemEl);
   }
 
-  // === Tóm tắt & nút Thanh toán ===
+  // Hiển thị tổng cộng và nút thanh toán
   cartSummaryEl.innerHTML = `
     <div class="flex items-center justify-between mt-4">
       <span class="text-lg font-bold text-red-600">
@@ -83,12 +84,12 @@ async function renderCart(cartItems) {
       </span>
       <button id="checkoutBtn" 
         class="px-6 py-3 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition">
-        ✅ Thanh toán
+        Thanh toán
       </button>
     </div>
   `;
 
-  // Bắt sự kiện click nút Thanh toán
+  // Sự kiện chuyển đến trang thanh toán
   const checkoutBtn = document.getElementById("checkoutBtn");
   if (checkoutBtn) {
     checkoutBtn.addEventListener("click", () => {
@@ -97,16 +98,17 @@ async function renderCart(cartItems) {
   }
 }
 
-
+// Tải giỏ hàng của người dùng từ Firestore theo uid
 function loadCart() {
   const session = userSession.getSession();
   if (!session) {
-    cartListEl.innerHTML = `<p class="text-center text-red-600">❌ Bạn cần đăng nhập để xem giỏ hàng</p>`;
+    cartListEl.innerHTML = `<p class="text-center text-red-600">Bạn cần đăng nhập để xem giỏ hàng</p>`;
     return;
   }
 
   const q = query(collection(db, "carts"), where("uid", "==", session.uid));
 
+  // Theo dõi realtime thay đổi trong giỏ
   onSnapshot(q, (snapshot) => {
     const cartItems = snapshot.docs.map((docSnap) => ({
       id: docSnap.id,
